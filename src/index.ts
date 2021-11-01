@@ -2,8 +2,7 @@ import './lib/setup';
 import { LogLevel, SapphireClient } from '@sapphire/framework';
 
 const client = new SapphireClient({
-	defaultPrefix: 'dr!',
-	regexPrefix: /^(hey +)?bot[,! ]/i,
+	defaultPrefix: 'wp ',
 	caseInsensitiveCommands: true,
 	logger: {
 		level: LogLevel.Debug
