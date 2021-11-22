@@ -1,5 +1,6 @@
 # WooperBot
-Custom bot for the best server on the internet wowee
 
-## How to use it?
-IDK still figuring it out 
+Discord bot for the best server on the internet wowee
+
+Based on the Sapphire discord.js bot framework to minimize boilerplate and reinventing the wheel
+
