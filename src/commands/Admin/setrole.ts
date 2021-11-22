@@ -4,9 +4,8 @@ import { SubCommandPluginCommand, SubCommandPluginCommandOptions } from '@sapphi
 import { Guild, Message, Role } from 'discord.js';
 import type { Args, Resolvers } from '@sapphire/framework';
 import { isNullOrUndefined } from '@sapphire/utilities';
-import mongoose from 'mongoose';
 import { send } from '@skyra/editable-commands';
-import { GuildModel } from '../../lib/database/schemas/Guild';
+import { GuildModel } from '../../lib/database/models/Guild';
 
 @ApplyOptions<SubCommandPluginCommandOptions>({
 	description: 

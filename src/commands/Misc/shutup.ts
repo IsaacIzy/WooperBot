@@ -2,10 +2,11 @@ import { ApplyOptions, RequiresGuildContext } from '@sapphire/decorators';
 import type { Args } from '@sapphire/framework';
 import { send } from '@sapphire/plugin-editable-commands';
 import { SubCommandPluginCommand, SubCommandPluginCommandOptions} from '@sapphire/plugin-subcommands';
-import { isNullOrUndefinedOrEmpty } from '@sapphire/utilities';
-import type { Message } from 'discord.js';
+import { isNullish, isNullOrUndefinedOrEmpty } from '@sapphire/utilities';
+import type { GuildMember, Message } from 'discord.js';
 import { RequiresGuildModerator } from '../../lib/decorators/RequiresGuildModerator';
 import { sendHelpMessage } from '../../lib/utils';
+const mongoose = require('mongoose');
 
 @ApplyOptions<SubCommandPluginCommandOptions>({
 	description: 'Make your friends shutup when they say dumb shit',
@@ -23,24 +24,31 @@ export class Shutup extends SubCommandPluginCommand {
 			sendHelpMessage(message, this.name, this.description, this.detailedDescription)
 			return
 		}
-		console.log("trying to pick a memeber to stfu")
 
-		const member =  await args.pick('member').catch(e => {
-			console.log("error alert yo" + e)
-			message.channel.send('You must specify someone to shutup!')
-		})
+		const member =  await args.pick('member').catch(() => {});
 
 		if(!isNullOrUndefinedOrEmpty(member)) {
 			return message.channel.send('Picked ' + member + ' to stfu');
 		}
-			
-		return
+		else {
+			return message.channel.send("Invalid user, how about you shutup instead idot")
+		}
 	}
 
 	@RequiresGuildContext((message: Message) => send(message, 'This command can only be used in servers'))
 	@RequiresGuildModerator()
-	public async config(message: Message) {
-		sendHelpMessage(message, this.name, this.description, this.detailedDescription)
-		return message.channel.send('Successfully ran config on shutup');
+	public async config(message: Message, args: Args) {
+		const duration = args.getOption('duration');
+		const cooldown = args.getOption('cooldown');
+
+		message.channel.send("it worked yo");
+		if(!isNullish(cooldown)) {
+				
+		}
+
+	}
+
+	async tempMute(member: GuildMember, duration: number) {
+		
 	}
 }

@@ -1,7 +1,7 @@
 import { Listener } from "@sapphire/framework";
 import { isNullOrUndefined } from "@sapphire/utilities";
 import type { Guild } from "discord.js";
-import { GuildModel } from "../lib/database/schemas/Guild";
+import { GuildModel } from "../lib/database/models/Guild";
 const mongoose = require('mongoose');
 export class UserEvent extends Listener<'guildCreate'> {
     public async run(guild: Guild) {

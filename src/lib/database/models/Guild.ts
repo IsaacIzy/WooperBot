@@ -27,5 +27,4 @@ const GuildSchema = new mongoose.Schema<Guild>(
         timestamps: true
     }
 );
-
 export const GuildModel = mongoose.model<Guild>('Guild', GuildSchema);
