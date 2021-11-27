@@ -1,6 +1,5 @@
 # WooperBot
 
-Discord bot for the best server on the internet wowee
+Discord bot framework/general purpose bot for easily creating custom functionality for your server. Makes no attempt to include moderation features, as many other bots exist that do that quite well already. 
 
-Based on the Sapphire discord.js bot framework to minimize boilerplate and reinventing the wheel
-
+Built on sapphire, a bot framework for discord.js. Requires a mongoDB database
