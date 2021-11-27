@@ -6,6 +6,7 @@ import type { Args, Resolvers } from '@sapphire/framework';
 import { isNullOrUndefined } from '@sapphire/utilities';
 import { send } from '@skyra/editable-commands';
 import { GuildModel } from '../../lib/database/models/Guild';
+import { RequiresGuildOwner } from '../../lib/decorators/RequiresGuildOwner';
 
 @ApplyOptions<SubCommandPluginCommandOptions>({
 	description: 
@@ -20,17 +21,19 @@ import { GuildModel } from '../../lib/database/models/Guild';
 	Lists current role assignments
 	\`\`\`[p]setrole list\`\`\`
 	`,
-	aliases: ['setrole'],
-	subCommands: [{input: 'setrole', default: true}, 'mod', 'admin', 'muted', 'list'],
+	aliases: ['setrole', 'setroles'],
+	subCommands: [{input: 'setrole', default: true}, {input: 'setroles', output: 'setrole'}, 'mod', 'admin', 'muted', 'list'],
 	flags: ['help']
 })
 export class UserCommand extends SubCommandPluginCommand {
 	@RequiresGuildContext((message: Message) => send(message, 'This command can only be used in servers'))
+	@RequiresGuildOwner()
 	public async setrole(message: Message, args: Args) {
 		sendHelpMessage(message, this.name, this.description, this.detailedDescription)
 	}
 
 	@RequiresGuildContext((message: Message) => send(message, 'This command can only be used in servers'))
+	@RequiresGuildOwner()
 	public async mod(message: Message, args: Args) {
 		const role =  await args.pick('role').catch(() => {
 			message.channel.send("Please specify a valid role name, mention, or id");
@@ -52,6 +55,7 @@ export class UserCommand extends SubCommandPluginCommand {
 	}
 
 	@RequiresGuildContext((message: Message) => send(message, 'This command can only be used in servers'))
+	@RequiresGuildOwner()
 	public async admin(message: Message, args: Args) {
 		const role =  await args.pick('role').catch(() => {
 			message.channel.send("Please specify a valid role name, mention, or id");
@@ -72,6 +76,7 @@ export class UserCommand extends SubCommandPluginCommand {
 	}
 
 	@RequiresGuildContext((message: Message) => send(message, 'This command can only be used in servers'))
+	@RequiresGuildOwner()
 	public async muted(message: Message, args: Args) {
 		const role =  await args.pick('role').catch(() => {
 			message.channel.send("Please specify a valid role name, mention, or id");
@@ -91,6 +96,7 @@ export class UserCommand extends SubCommandPluginCommand {
 		}
 	}
 
+	@RequiresGuildContext((message: Message) => send(message, 'This command can only be used in servers'))
 	public async list(message: Message, args: Args) {
 		await GuildModel.findOne({"id": message.guild!.id})
 		.exec()

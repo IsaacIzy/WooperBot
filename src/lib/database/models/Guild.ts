@@ -1,8 +1,8 @@
-import mongoose from 'mongoose';
+import mongoose, { Document, Model, Schema } from 'mongoose';
 
 interface Guild {
     // Discord ID of the guild this document is for
-    id: string;
+    discordId: string;
 
     // Roles. Modified with setrole command
     modRole?: string;
@@ -14,17 +14,21 @@ interface Guild {
     shutupDuration: number;
 }
 
-const GuildSchema = new mongoose.Schema<Guild>(
+export interface GuildDocument extends Guild, Document {
+
+}
+
+export const GuildSchema = new Schema<GuildDocument>(
     {
-    id: { type: String, required: true },
-    modRole: { type: String },
-    adminRole: { type: String },
-    mutedRole: { type: String },
-    shutupDuration: { type: Number, default: 60 },
-    shutupCooldown: { type: Number, default: 3600 }
+        discordId: { type: String, required: true },
+        modRole: { type: String },
+        adminRole: { type: String },
+        mutedRole: { type: String },
+        shutupDuration: { type: Number, default: 60 },
+        shutupCooldown: { type: Number, default: 3600 }
     },
     {
         timestamps: true
     }
 );
-export const GuildModel = mongoose.model<Guild>('Guild', GuildSchema);
+export const GuildModel = mongoose.model<GuildDocument>('Guild', GuildSchema);

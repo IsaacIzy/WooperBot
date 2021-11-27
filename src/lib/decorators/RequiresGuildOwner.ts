@@ -1,9 +1,7 @@
 import { createFunctionPrecondition } from '@sapphire/decorators';
-import { isNullOrUndefined } from '@sapphire/utilities';
 import type { Message } from 'discord.js';
-import { getAdminRole, getModRole } from '../database/util';
 
-export function RequiresGuildAdmin(): MethodDecorator {
+export function RequiresGuildOwner(): MethodDecorator {
 	return createFunctionPrecondition(async (message: Message) => {
 		const guildOwner = await message.guild!.fetchOwner();
         if (message.member!.id === guildOwner.id) {

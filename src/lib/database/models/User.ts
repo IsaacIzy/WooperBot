@@ -1,9 +1,24 @@
-import { Schema, model } from 'mongoose';
+import mongoose, { Document } from 'mongoose';
 
-interface User {
-    id: string;
+export interface User {
+    // Discord ID
+    discordId: string;
+
+    // The date and time shutup command was last used by this user
+    shutupLastUsed?: Date; 
 }
 
-export const userModel = model('User', new Schema<User>({
-    id: { type: String, required: true }
-}));
+export interface UserDocument extends User, Document {
+}
+
+const UserSchema = new mongoose.Schema<UserDocument>(
+    {
+        discordId: { type: String, required: true },
+        shutupLastUsed: { type: Date}
+    },
+    {
+        timestamps: true
+    }
+);
+
+export const UserModel = mongoose.model<UserDocument>('User', UserSchema);
